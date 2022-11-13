@@ -1,7 +1,7 @@
 const http = require('http');
 const env = require('dotenv');
 const {MongoClient} = require("mongodb");
-const { urlFound } = require('./routes/studentRoutes');
+const MainRouterClass = require('./routes/studentRoutes');
 
 
 //environment variables
@@ -20,7 +20,6 @@ MongoClient.connect(
       console.log("DataBase connected");
     }
   )
-
 
 const server = http.createServer(async (req, res) => {
 
@@ -42,7 +41,8 @@ const server = http.createServer(async (req, res) => {
         res.end();
         return;
     }
-    const validUrl = await urlFound(req,db);
+    let mainObj=new MainRouterClass(req,db);
+    const validUrl = await mainObj.processRequest(req,db);
     if (validUrl.status == true) {
         res.writeHead(200, Header)
         let hasExpiryData;

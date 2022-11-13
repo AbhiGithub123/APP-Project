@@ -32,7 +32,13 @@ const FormLayout = (props) => {
                 setDays(1);
                 showAlert({
                     msg_type: "success",
-                    msg_text: `Student Added successfully-${JSON.stringify(payload)}`
+                    msg_text: `Student Added successfully`
+                });
+            }else if(res.data.message == "BookExists")
+            {
+                showAlert({
+                    msg_type: "error",
+                    msg_text: "Book Not Available"
                 });
             } else {
                 showAlert({
